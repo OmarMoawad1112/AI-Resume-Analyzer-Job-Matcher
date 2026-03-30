@@ -86,18 +86,18 @@ prompt = build_prompt(context,job_description)
 # STEP 8: GENERATE RESPONSE
 # ==========================================
 
-result = query_hf(prompt)
+# result = query_hf(prompt)
 
 # Extract generated text safely
-if isinstance(result, list) and "generated_text" in result[0]:
-    response = result[0]["generated_text"]
-else:
-    response = str(result)
+# if isinstance(result, list) and "generated_text" in result[0]:
+#     response = result[0]["generated_text"]
+# else:
+#     response = str(result)
 
 
 # ==========================================
 # STEP 9: OUTPUT RESULT
 # ==========================================
 
-print("\n========== AI ANALYSIS ==========\n")
-print(response)
+# print("\n========== AI ANALYSIS ==========\n")
+# print(response)
