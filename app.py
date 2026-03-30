@@ -65,21 +65,3 @@ context = "\n".join(
 # ==========================================
 # IMPORTANT: Use LLaMA instruction format for better results
 prompt = build_prompt(context,job_description)
-
-
-
-# ==========================================
-# STEP 7: CALL MODEL VIA HUGGING FACE API
-# ==========================================
-
-
-# ==========================================
-# STEP 8: GENERATE RESPONSE
-# ==========================================
-
-
-
-# ==========================================
-# STEP 9: OUTPUT RESULT
-# ==========================================
-
