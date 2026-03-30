@@ -68,36 +68,18 @@ prompt = build_prompt(context,job_description)
 
 
 
-# # ==========================================
-# # STEP 7: CALL MODEL VIA HUGGING FACE API
-# # ==========================================
-# from huggingface_hub import InferenceClient
-
-# client = InferenceClient(
-#     model="google/flan-t5-base",
-#     token="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"
-# )
-
-# response = client.text_generation(prompt)
-# print(response)
+# ==========================================
+# STEP 7: CALL MODEL VIA HUGGING FACE API
+# ==========================================
 
 
 # ==========================================
 # STEP 8: GENERATE RESPONSE
 # ==========================================
 
-# result = query_hf(prompt)
-
-# Extract generated text safely
-# if isinstance(result, list) and "generated_text" in result[0]:
-#     response = result[0]["generated_text"]
-# else:
-#     response = str(result)
 
 
 # ==========================================
 # STEP 9: OUTPUT RESULT
 # ==========================================
 
-# print("\n========== AI ANALYSIS ==========\n")
-# print(response)
