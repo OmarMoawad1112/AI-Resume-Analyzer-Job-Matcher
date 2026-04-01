@@ -70,10 +70,18 @@ prompt = build_prompt(context, job_description)
 # ==========================================
 # STEP 7: LLM CLIENT (FIXED + SAFE)
 # ==========================================
+from dotenv import load_dotenv
+import os
+
+# get token
+token = os.getenv("ACCESS_TOKEN")
+
+# load .env file
+load_dotenv()
 
 client = InferenceClient(
     model="meta-llama/Meta-Llama-3-8B-Instruct",
-    token="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",
+    token=token,
 )
 
 
