@@ -73,11 +73,11 @@ prompt = build_prompt(context, job_description)
 from dotenv import load_dotenv
 import os
 
-# get token
-token = os.getenv("ACCESS_TOKEN")
-
 # load .env file
 load_dotenv()
+
+# get token
+token = os.getenv("ACCESS_TOKEN")
 
 client = InferenceClient(
     model="meta-llama/Meta-Llama-3-8B-Instruct",
