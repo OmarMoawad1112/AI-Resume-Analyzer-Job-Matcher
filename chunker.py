@@ -19,7 +19,7 @@ def chunk_text(text):
         # Number of overlapping characters between consecutive chunks
         # This helps preserve context between chunks
         # Example: last 100 characters of chunk1 will appear in chunk2
-        chunk_overlap=100
+        chunk_overlap=50
     )
 
     # Split the input text into smaller chunks

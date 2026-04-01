@@ -2,21 +2,18 @@
 # IMPORTS
 # ==========================================
 
-# Your custom RAG modules
 from loader import load_pdf
 from chunker import chunk_text
 from vectorstore import create_vectorstore
 from rag import build_prompt
 
-# LLaMA (Hugging Face)
-from langchain_community.llms import HuggingFacePipeline
-from transformers import pipeline
+from huggingface_hub import InferenceClient
+import json
 
 
 # ==========================================
-# STEP 1: LOAD CV (PDF → TEXT)
+# STEP 1: LOAD CV
 # ==========================================
-# Extract raw text from the CV PDF file
 
 cv_path = "cv.pdf"
 text = load_pdf(cv_path)
@@ -25,43 +22,106 @@ text = load_pdf(cv_path)
 # ==========================================
 # STEP 2: CHUNKING
 # ==========================================
-# Split long text into smaller chunks
-# This improves embedding quality and retrieval accuracy
 
 chunks = chunk_text(text)
 
+print(f"[INFO] Number of chunks: {len(chunks)}")
 
 
 # ==========================================
-# STEP 3: CREATE VECTOR DATABASE
+# STEP 3: VECTOR DATABASE
 # ==========================================
-# Convert chunks → embeddings → store in FAISS
 
 vectorstore = create_vectorstore(chunks)
 
 
 # ==========================================
-# STEP 4: DEFINE JOB DESCRIPTION
+# STEP 4: JOB DESCRIPTION
 # ==========================================
 
 job_description = "Looking for a Python data analyst with ML experience"
 
 
 # ==========================================
-# STEP 5: RETRIEVAL (SIMILARITY SEARCH)
+# STEP 5: RETRIEVAL
 # ==========================================
-# Find top-k relevant chunks from CV
 
 docs = vectorstore.similarity_search(job_description, k=5)
 
-# Extract only text content from retrieved docs
-context = "\n".join(
-    [doc.page_content for doc in docs]
-    )
+seen = set()
+clean_chunks = []
+
+for doc in docs:
+    txt = doc.page_content.strip()
+    if txt not in seen:
+        clean_chunks.append(txt)
+        seen.add(txt)
+
+context = "\n".join(clean_chunks)
 
 
 # ==========================================
-# STEP 6: BUILD PROMPT
+# STEP 6: PROMPT BUILDING
 # ==========================================
-# IMPORTANT: Use LLaMA instruction format for better results
-prompt = build_prompt(context,job_description)
+
+prompt = build_prompt(context, job_description)
+
+
+# ==========================================
+# STEP 7: LLM CLIENT (FIXED + SAFE)
+# ==========================================
+
+client = InferenceClient(
+    model="meta-llama/Meta-Llama-3-8B-Instruct",
+    token="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",
+)
+
+
+# ==========================================
+# STEP 8: LLM CALL (ROBUST)
+# ==========================================
+
+def ask_llama(prompt):
+    try:
+        response = client.chat_completion(
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a strict HR AI assistant. "
+                        "Follow instructions exactly. "
+                        "Return ONLY valid JSON when requested."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            max_tokens=400,
+            temperature=0.2  # lower = less hallucination
+        )
+
+        return response.choices[0].message["content"]
+
+    except Exception as e:
+        print("[ERROR] LLM call failed:", str(e))
+        return None
+
+
+# ==========================================
+# STEP 9: RUN MODEL
+# ==========================================
+
+import json
+
+raw_response = ask_llama(prompt)
+
+print("\n========== RAW LLM OUTPUT ==========\n")
+print(raw_response)
+
+try:
+    result = json.loads(raw_response)
+except Exception as e:
+    print("\n[ERROR] Invalid JSON output from LLM")
+    result = None
