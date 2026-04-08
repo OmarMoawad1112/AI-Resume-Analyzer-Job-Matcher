@@ -11,7 +11,7 @@
 
 **An AI-powered web application that analyzes resumes and matches them against job descriptions using RAG and LLMs — giving recruiters and job seekers instant, structured insights.**
 
-[Features](#-key-features) · [How It Works](#-how-it-works) · [Installation](#-installation) · [Usage](#-usage) · [Roadmap](#-roadmap)
+[Features](#-key-features) · [How It Works](#how-it-works) · [Installation](#-installation) · [Usage](#-usage) · [Roadmap](#-roadmap)
 
 ---
 
@@ -97,6 +97,7 @@ Recruiters and job seekers often struggle to quickly evaluate how well a resume 
 
 ---
 
+<a name="how-it-works"></a>
 ## ⚙️ How It Works
 
 ```
