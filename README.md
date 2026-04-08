@@ -263,8 +263,8 @@ Please make sure your changes follow the existing code style and include relevan
   <tr>
     <td align="center">
       <strong>Omar Mohamed</strong><br/>
-      <a href="https://github.com/your-username">GitHub</a> ·
-      <a href="https://linkedin.com/in/your-profile">LinkedIn</a>
+      <a href="https://github.com/OmarMoawad1112">GitHub</a> ·
+      <a href="https://linkedin.com/in/omar-mowad">LinkedIn</a>
     </td>
   </tr>
 </table>
