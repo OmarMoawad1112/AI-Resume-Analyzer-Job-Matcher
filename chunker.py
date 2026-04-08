@@ -25,7 +25,7 @@ def chunk_text(text):
     # Split the input text into smaller chunks
     # The splitter will:
     # 1. Try splitting by paragraphs
-    # 2. If too big → split by linesd
+    # 2. If too big → split by lines
     # 3. If still too big → split by words
     # 4. If needed → split by characters
     chunks = splitter.split_text(text)

@@ -70,9 +70,6 @@ if run_btn:
         chunks = chunk_text(text)
 
 
-    st.info(f"Chunks created: {len(chunks)}")
-
-
     # STEP 4: VECTOR STORE
     with st.spinner("Building vector database..."):
         vectorstore = create_vectorstore(chunks)
@@ -111,7 +108,7 @@ if run_btn:
                 {"role": "user", "content": prompt}
             ],
             max_tokens=500,
-            temperature=0.2
+            temperature=0.3
         )
 
     response_text = completion.choices[0].message.content

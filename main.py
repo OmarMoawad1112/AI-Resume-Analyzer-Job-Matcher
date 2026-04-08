@@ -15,7 +15,7 @@ import json
 # STEP 1: LOAD CV
 # ==========================================
 
-cv_path = "cv.pdf"
+cv_path = input("enter file path: ")
 text = load_pdf(cv_path)
 
 
@@ -24,9 +24,6 @@ text = load_pdf(cv_path)
 # ==========================================
 
 chunks = chunk_text(text)
-
-print(f"[INFO] Number of chunks: {len(chunks)}")
-
 
 # ==========================================
 # STEP 3: VECTOR DATABASE
@@ -39,7 +36,54 @@ vectorstore = create_vectorstore(chunks)
 # STEP 4: JOB DESCRIPTION
 # ==========================================
 
-job_description = "Looking for a Python data analyst with ML experience"
+job_description = """
+Job Title: Machine Learning Engineer
+Job Summary
+
+A Machine Learning Engineer is responsible for designing, building, and deploying machine learning models that solve real-world problems. They work with large datasets, develop algorithms, and integrate models into production systems to improve business decisions and automate processes.
+
+Key Responsibilities
+Design and develop machine learning models and algorithms
+Collect, clean, and preprocess large datasets
+Train, test, and evaluate model performance
+Deploy models into production environments
+Optimize models for accuracy, scalability, and efficiency
+Collaborate with data scientists, software engineers, and stakeholders
+Monitor and maintain models after deployment
+Stay updated with the latest trends in AI and machine learning
+Required Skills
+
+Technical Skills:
+
+Programming languages: Python, R, or Java
+Machine learning libraries: TensorFlow, PyTorch, Scikit-learn
+Data manipulation: Pandas, NumPy
+Knowledge of algorithms (regression, classification, clustering)
+Experience with databases (SQL, NoSQL)
+Understanding of data structures and algorithms
+
+Tools & Technologies:
+
+Cloud platforms (AWS, Azure, Google Cloud)
+Big Data tools (Hadoop, Spark)
+Version control (Git)
+Education & Qualifications
+Bachelor’s degree in Computer Science, Data Science, AI, or related field
+(Preferred) Master’s degree in Machine Learning, AI, or Data Science
+Strong background in mathematics, statistics, and probability
+Soft Skills
+Problem-solving and analytical thinking
+Communication and teamwork
+Attention to detail
+Ability to handle large and complex data
+Example Use Cases
+Recommendation systems (like Netflix or Amazon)
+Fraud detection systems
+Image recognition and NLP applications
+Predictive analytics for business decisions
+Career Path
+Junior ML Engineer → ML Engineer → Senior ML Engineer → AI Architect / ML Lead
+"""
 
 
 # ==========================================
@@ -96,7 +140,7 @@ completion = client.chat.completions.create(
         }
     ],
     max_tokens=500,        # control output
-    temperature=0.2
+    temperature=0.5
 )
 
 response_text = completion.choices[0].message.content
@@ -105,6 +149,6 @@ response_text = completion.choices[0].message.content
 print(response_text)
 
 
-print(completion.usage['prompt_tokens'])
-print(completion.usage['completion_tokens'])
-print(completion.usage['total_tokens'])
+print(f"Prompt Tokens: {completion.usage['prompt_tokens']}")
+print(f"Output Tokens: {completion.usage['completion_tokens']}")
+print(f"Totak Tokens: {completion.usage['total_tokens']}")
